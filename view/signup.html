@@ -21,6 +21,16 @@
         </div>
         <form class="w-full flex flex-col gap-4">
           <div class="space-y-2">
+            <label class="block text-gray-700 text-[17px]">Fullname</label>
+            <input
+              name="name"
+              class="p-3 rounded border border-gray-700 w-full"
+              placeholder="Enter name"
+              required
+              type="text"
+            />
+          </div>
+          <div class="space-y-2">
             <label class="block text-gray-700 text-[17px]">Email Id</label>
             <input
               name="email"
@@ -30,7 +40,16 @@
               type="email"
             />
           </div>
-
+          <div class="space-y-2">
+            <label class="block text-gray-700 text-[17px]">Mobile</label>
+            <input
+              name="mobile"
+              class="p-3 rounded border border-gray-700 w-full"
+              placeholder="Enter name"
+              required
+              type="number"
+            />
+          </div>
           <div class="space-y-2">
             <label class="block text-gray-700 text-[17px]">Password</label>
             <input
@@ -44,12 +63,12 @@
           <button
             class="p-3 rounded bg-violet-500 border-gray-700 text-white w-full cursor-pointer font-medium hover:bg-violet-700"
           >
-            Sign In
+            Sign Up
           </button>
         </form>
         <div class="flex items-center gap-2">
-          <p>Don't have an account?</p>
-          <a href="#" class="text-blue-400 hover:text-blue-600">Sign up</a>
+          <p>Already have an account?</p>
+          <a href="#" class="text-blue-400 hover:text-blue-600">Sign In</a>
         </div>
       </div>
     </div>
