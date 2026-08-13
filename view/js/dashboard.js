@@ -1,8 +1,15 @@
-const checkSession = async () => {
-  const session = await getSession();
-  if (!session) {
-    location.href = "../index.html";
-  }
+const logout = async () => {
+  localStorage.clear();
+  location.href = "/login";
 };
 
-checkSession();
+window.onload = () => { showUserDetails() }
+
+const showUserDetails = async () => {
+  const session = await getSession()
+
+  const fullname = document.getElementById("fullname")
+  const email = document.getElementById("email")
+  fullname.innerHTML = session.fullname
+  email.innerHTML = session.email
+}

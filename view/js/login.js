@@ -1,9 +1,11 @@
+axios.defaults.baseURL = SERVER;
+
 let toast = new Notyf({ position: { x: "right", y: "top" } });
 
 const checkSession = async () => {
   const session = await getSession();
   if (session) {
-    location.href = "app/dashboard.html";
+    location.href = "/dashboard";
   }
 };
 
@@ -18,7 +20,7 @@ const login = async (e) => {
       password: form.elements.password.value,
     };
 
-    const response = await axios.post("http://localhost:8080/login", payload);
+    const response = await axios.post("/api/login", payload);
     toast.success(response.data.message);
     setTimeout(() => {
       toast.success("Redirecting to Homepage...");
@@ -27,7 +29,7 @@ const login = async (e) => {
     localStorage.setItem("authToken", response.data.token);
 
     setTimeout(() => {
-      location.href = "./app/dashboard.html";
+      location.href = "/dashboard";
     }, 3000);
   } catch (error) {
     toast.error(error.response ? error.response.data.message : error.message);

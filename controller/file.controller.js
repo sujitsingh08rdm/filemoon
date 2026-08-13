@@ -5,9 +5,10 @@ const fs = require("fs");
 const createFile = async (req, res) => {
   try {
     const file = req.file;
+    const { filename } = req.body;
 
     const payload = {
-      filename: file.filename,
+      filename: filename,
       path: `${file.destination}${file.filename}`,
       type: file.mimetype.split("/")[0],
       size: file.size,

@@ -18,5 +18,8 @@
     "mongoose": "^9.9.2",
     "multer": "^2.2.0",
     "uuid": "^14.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.6"
   }
 }

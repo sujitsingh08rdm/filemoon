@@ -10,7 +10,7 @@
     />
 
     <script src="https://unpkg.com/axios@1.13.2/dist/axios.min.js"></script>
-    <script src="../js/session.js"></script>
+
     <title>Filemoon</title>
   </head>
   <body>
@@ -22,11 +22,11 @@
       >
         <div class="flex flex-col items-center">
           <img src="../images/Avatar.jpg" alt="avatar-image" width="80" />
-          <h2 class="text-lg font-medium text-white">Sujit</h2>
-          <p class="text-sm text-white">Sujit@gamil.com</p>
+          <h2 class="text-lg font-medium text-white capitalize" id="fullname"></h2>
+          <p class="text-sm text-white" id="email"></p>
         </div>
         <div class="px-6 flex gap-2 flex-col">
-          <a href="./dashboard.html">
+          <a href="/dashboard">
             <button
               class="w-full py-2 bg-rose-500 text-white rounded hover:bg-rose-700"
             >
@@ -34,14 +34,14 @@
               ><label>Dashboard</label>
             </button>
           </a>
-          <a href="./my-files.html">
+          <a href="/files">
             <button
               class="w-full py-2 bg-rose-500 text-white rounded hover:bg-rose-700"
             >
               <i class="ri-file-ai-line"></i><label>My Files</label>
             </button>
           </a>
-          <a href="./history.html">
+          <a href="/history">
             <button
               class="w-full py-2 bg-rose-500 text-white rounded hover:bg-rose-700"
             >
@@ -172,6 +172,7 @@
       </section>
     </div>
 
+    <script src="../js/env.js"></script>
     <script src="../js/layout.js"></script>
     <script src="../js/session.js"></script>
     <script src="../js/dashboard.js"></script>

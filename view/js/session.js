@@ -1,3 +1,5 @@
+axios.defaults.baseURL = SERVER;
+
 const getSession = async () => {
   try {
     const session = localStorage.getItem("authToken");
@@ -10,19 +12,9 @@ const getSession = async () => {
       token: session,
     };
 
-    const { data } = await axios.post(
-      "http://localhost:8080/token/verify",
-      payload,
-    );
+    const { data } = await axios.post("/api/token/verify", payload);
     return data;
   } catch (error) {
     return null;
   }
 };
-
-const logout = async () => {
-  localStorage.clear();
-  location.href = "../index.html";
-};
-
-// getSession();
