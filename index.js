@@ -10,7 +10,7 @@ mongoose
 
 const express = require("express");
 const { v4: uniqueId } = require("uuid");
-
+const cors = require("cors");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, next) => {
@@ -34,12 +34,15 @@ const {
   downloadFile,
 } = require("./controller/file.controller");
 const { fetchDashboard } = require("./controller/dashboard.controller");
+const { verifyToken } = require("./controller/token.controller");
 const app = express();
 app.listen(process.env.PORT || 8080);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("view"));
+
+app.use(cors({ origin: "http://localhost:5500" }));
 
 app.post("/signup", signUp);
 app.post("/login", login);
@@ -50,3 +53,4 @@ app.delete("/file/:id", deleteFile);
 app.get("/file/download/:id", downloadFile);
 
 app.get("/dashboard", fetchDashboard);
+app.post("/token/verify", verifyToken);
