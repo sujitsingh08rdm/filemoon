@@ -1,9 +1,11 @@
+axios.defaults.baseURL = SERVER;
+
 let toast = new Notyf({ position: { x: "right", y: "top" } });
 
 const checkSession = async () => {
   const session = await getSession();
   if (session) {
-    location.href = "app/dashboard.html";
+    location.href = "/dashboard";
   }
 };
 
@@ -23,7 +25,7 @@ const signup = async (e) => {
       mobile: elements.mobile.value,
     };
 
-    const response = await axios.post("http://localhost:8080/signup", payload);
+    const response = await axios.post("/api/signup", payload);
 
     form.reset();
     toast.success(response.data.message);
@@ -33,7 +35,7 @@ const signup = async (e) => {
     }, 1000);
 
     setTimeout(() => {
-      location.href = "index.html";
+      location.href = "/login";
     }, 2000);
   } catch (error) {
     toast.error(error.response ? error.response.data.message : error.message);
