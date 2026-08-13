@@ -34,7 +34,7 @@ userSchema.pre("save", async function () {
   const count = await model("User").countDocuments({ mobile: this.mobile });
 
   if (count > 0) {
-    throw new Error(new Error("Mobile number already exists"));
+    throw new Error("Mobile number already exists");
   }
 });
 
@@ -42,13 +42,14 @@ userSchema.pre("save", async function () {
   const count = await model("User").countDocuments({ email: this.email });
 
   if (count > 0) {
-    throw new Error(
-      new Error("Email already exists, try again with different email"),
-    );
+    throw new Error("Email already exists, try again with different email");
   }
 });
 
 userSchema.pre("save", async function () {
+  if (!this.isModified("password")) {
+    return;
+  }
   const encryptedPass = await bcrypt.hash(this.password.toString(), 12);
   this.password = encryptedPass;
 });

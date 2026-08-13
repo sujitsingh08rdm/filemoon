@@ -8,6 +8,9 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
       rel="stylesheet"
     />
+
+    <script src="https://unpkg.com/axios@1.13.2/dist/axios.min.js"></script>
+    <script src="../js/session.js"></script>
     <title>Filemoon</title>
   </head>
   <body>
@@ -48,6 +51,7 @@
           </a>
           <button
             class="w-full py-2 bg-rose-500 text-white rounded hover:bg-rose-700"
+            onclick="logout()"
           >
             <i class="ri-logout-circle-r-line"></i>
             <label>Logout</label>
@@ -66,6 +70,7 @@
           <div class="space-x-2">
             <button
               class="bg-gray-100 px-4 py-2 rounded-md hover:bg-gray-200 cursor-pointer"
+              onclick="logout()"
             >
               <i class="ri-logout-circle-r-line"></i>
             </button>
@@ -166,6 +171,9 @@
         </div>
       </section>
     </div>
+
     <script src="../js/layout.js"></script>
+    <script src="../js/session.js"></script>
+    <script src="../js/dashboard.js"></script>
   </body>
 </html>

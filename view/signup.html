@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/axios@1.13.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
       rel="stylesheet"
@@ -19,15 +26,16 @@
           <i class="ri-moon-line text-5xl text-violet-700"></i>
           <h1 class="text-3xl font-semibold">Filemoon</h1>
         </div>
-        <form class="w-full flex flex-col gap-4">
+        <form class="w-full flex flex-col gap-4" onsubmit="signup(event)">
           <div class="space-y-2">
             <label class="block text-gray-700 text-[17px]">Fullname</label>
             <input
-              name="name"
+              name="fullname"
               class="p-3 rounded border border-gray-700 w-full"
               placeholder="Enter name"
               required
               type="text"
+              value=""
             />
           </div>
           <div class="space-y-2">
@@ -38,6 +46,7 @@
               placeholder="email@mail.com"
               required
               type="email"
+              value=""
             />
           </div>
           <div class="space-y-2">
@@ -48,6 +57,7 @@
               placeholder="Enter phone number"
               required
               type="number"
+              value=""
             />
           </div>
           <div class="space-y-2">
@@ -58,6 +68,7 @@
               placeholder="enter password"
               required
               type="password"
+              value=""
             />
           </div>
           <button
@@ -74,5 +85,8 @@
         </div>
       </div>
     </div>
+
+    <script src="./js/session.js"></script>
+    <script src="./js/signup.js"></script>
   </body>
 </html>
