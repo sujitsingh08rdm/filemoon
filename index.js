@@ -36,6 +36,7 @@ const {
   deleteFile,
   downloadFile,
 } = require("./controller/file.controller");
+const { shareFile } = require("./controller/share.controller");
 const { fetchDashboard } = require("./controller/dashboard.controller");
 const { verifyToken } = require("./controller/token.controller");
 const app = express();
@@ -96,3 +97,8 @@ app.get("/api/file/download/:id", downloadFile);
 
 app.get("/api/dashboard", fetchDashboard);
 app.post("/api/token/verify", verifyToken);
+app.post("/api/share", shareFile);
+
+app.use((req, res) => {
+  res.status(404).json({ message: "Endpoint Not Found" });
+});
