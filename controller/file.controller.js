@@ -7,6 +7,8 @@ const getType = (type) => {
   if (ext === "x-msdownload") return "application/exe";
   if (ext === "octet-stream") return "application/msi";
   if (ext === "x-zip-compressed") return "application/zip";
+  if (ext === "vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    return "application/xlsx";
 
   return type;
 };
@@ -21,6 +23,7 @@ const createFile = async (req, res) => {
       path: `${file.destination}${file.filename}`,
       type: getType(file.mimetype),
       size: file.size,
+      user: req.user.id,
     };
 
     const newFile = await FileModel.create(payload);
@@ -32,7 +35,9 @@ const createFile = async (req, res) => {
 
 const fetchFiles = async (req, res) => {
   try {
-    const files = await FileModel.find();
+    const files = await FileModel.find({ user: req.user.id }).sort({
+      createdAt: -1,
+    });
     res.status(200).json(files);
   } catch (error) {
     res.status(500).json({ message: error.message });
