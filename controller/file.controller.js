@@ -2,6 +2,15 @@ const path = require("path");
 const FileModel = require("../model/file.model");
 const fs = require("fs");
 
+const getType = (type) => {
+  const ext = type.split("/").pop();
+  if (ext === "x-msdownload") return "application/exe";
+  if (ext === "octet-stream") return "application/msi";
+  if (ext === "x-zip-compressed") return "application/zip";
+
+  return type;
+};
+
 const createFile = async (req, res) => {
   try {
     const file = req.file;
@@ -10,9 +19,10 @@ const createFile = async (req, res) => {
     const payload = {
       filename: filename,
       path: `${file.destination}${file.filename}`,
-      type: file.mimetype.split("/")[0],
+      type: getType(file.mimetype),
       size: file.size,
     };
+
     const newFile = await FileModel.create(payload);
     res.status(200).json(newFile);
   } catch (error) {
@@ -48,6 +58,7 @@ const downloadFile = async (req, res) => {
     const { id } = req.params;
 
     const file = await FileModel.findById(id);
+    const ext = file.type.split("/").pop();
 
     if (!file) {
       return res.status(404).json({ message: "File not found" });
@@ -58,7 +69,7 @@ const downloadFile = async (req, res) => {
 
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename="${file.filename}"`,
+      `attachment; filename="${file.filename}.${ext}"`,
     );
 
     res.sendFile(filePath, (err) => {
