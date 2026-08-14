@@ -5,6 +5,25 @@ window.onload = () => {
   fetchFiles();
 };
 
+const checkSession = async () => {
+  const session = await getSession();
+  if (!session) {
+    location.href = "/login";
+  }
+};
+
+checkSession();
+
+const getToken = () => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  };
+
+  return options;
+};
+
 const toggleDrawer = () => {
   const drawer = document.getElementById("drawer");
   const rightValue = drawer.style.right;
@@ -36,6 +55,7 @@ const uploadFile = async (e) => {
         progress.style.width = percentage + "%";
         progress.innerHTML = percentage;
       },
+      ...getToken(),
     };
     uploadButton.disabled = true;
     await axios.post("/api/file", formdata, options);
@@ -61,7 +81,7 @@ const formatSize = (size) => {
 
 const fetchFiles = async () => {
   try {
-    const { data } = await axios.get("/api/file");
+    const { data } = await axios.get("/api/file", getToken());
     const table = document.getElementById("file-table");
     table.innerHTML = "";
     for (let file of data) {
@@ -104,7 +124,7 @@ const fetchFiles = async () => {
 
 const deleteFile = async (id) => {
   try {
-    await axios.delete(`/api/file/${id}`);
+    await axios.delete(`/api/file/${id}`, getToken());
     toast.success("file deleted !");
     fetchFiles();
   } catch (err) {
@@ -115,7 +135,7 @@ const deleteFile = async (id) => {
 
 const downloadFile = async (id, filename) => {
   try {
-    const options = { responseType: "blob" };
+    const options = { responseType: "blob", ...getToken() };
     const { data } = await axios.get(`/api/file/download/${id}`, options);
     const ext = data.type.split("/").pop();
     const url = URL.createObjectURL(data);
@@ -159,7 +179,7 @@ const shareFile = async (id, e) => {
     const email = form.elements.email.value.trim();
     const payload = { email: email, fileId: id };
 
-    await axios.post("/api/share", payload);
+    await axios.post("/api/share", payload, getToken());
     toast.success("File Shared Successfully...");
   } catch (err) {
     toast.error(err.response ? err.response.data.message : err.message);
