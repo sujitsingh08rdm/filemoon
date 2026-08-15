@@ -1,4 +1,5 @@
 window.onload = () => {
+  fetchImage();
   fetchHistory();
 };
 
@@ -57,5 +58,47 @@ const fetchHistory = async () => {
     }
   } catch (err) {
     toast.error(err.response ? err.response.data.message : err.message);
+  }
+};
+
+const uploadImage = () => {
+  try {
+    const input = document.createElement("input");
+    const pic = document.getElementById("pic");
+    input.type = "file";
+    input.accept = "image/*";
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append("picture", file);
+      await axios.post("/api/profile-pic", formData, getToken());
+
+      const url = URL.createObjectURL(file);
+      pic.src = url;
+    };
+  } catch (err) {
+    toast.error(err.response ? err.response.data.message : err.message);
+  }
+};
+
+const fetchImage = async () => {
+  try {
+    const options = {
+      responseType: "blob",
+      ...getToken(),
+    };
+    const { data } = await axios.get("/api/profile-pic", options);
+    const url = URL.createObjectURL(data);
+    const pic = document.getElementById("pic");
+    pic.src = url;
+  } catch (err) {
+    if (!err.response) {
+      return toast.error(err.message);
+    }
+    const error = await err.response.data.text();
+    const { message } = JSON.parse(error);
+    toast.error(message);
   }
 };

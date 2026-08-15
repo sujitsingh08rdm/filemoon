@@ -30,7 +30,12 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-const { signUp, login } = require("./controller/user.controller");
+const {
+  signUp,
+  login,
+  updateProfilePic,
+  fetchImage,
+} = require("./controller/user.controller");
 const {
   createFile,
   fetchFiles,
@@ -83,7 +88,13 @@ app.get("/files", (req, res) => {
 // API ENDPOINT
 app.post("/api/signup", signUp);
 app.post("/api/login", login);
-
+app.post(
+  "/api/profile-pic",
+  AuthMiddleware,
+  upload.single("picture"),
+  updateProfilePic,
+);
+app.get("/api/profile-pic", AuthMiddleware, fetchImage);
 app.post("/api/file", AuthMiddleware, upload.single("file"), createFile);
 app.get("/api/file", AuthMiddleware, fetchFiles);
 app.delete("/api/file/:id", AuthMiddleware, deleteFile);
